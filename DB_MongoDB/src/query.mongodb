@@ -1,0 +1,4 @@
+use("import_export")
+
+//Colleccion -> Contar # Documentos
+db.Comprador.countDocuments()

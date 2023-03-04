@@ -1,0 +1,707 @@
+//BASE DE DATOS
+use("import_export")
+
+//------------------------------------------------------------------------------------------------------
+
+//COLECCIONES
+//ARANCEL:
+db.createCollection("Arancel", 
+{
+    validator: 
+    {
+        $jsonSchema: 
+        {
+            bsonType: 'object',
+            properties: 
+            {
+                //Posición
+                _id: 
+                {
+                    bsonType: 'int'
+                },
+                descripcionArancel: 
+                {
+                    bsonType: 'string'
+                },
+                gravamen: 
+                {
+                    bsonType: 'int'
+                }
+            }
+        }
+    }
+})
+
+//CIUU:
+db.createCollection("CIIU", 
+{
+    validator: 
+    {
+        $jsonSchema: 
+        {
+            bsonType: 'object',
+            properties: 
+            {
+                //CIIU
+                _id: 
+                {
+                    bsonType: 'int'
+                },
+                descripcionCIIU: 
+                {
+                    bsonType: 'string'
+                }
+            }
+        }
+    }
+})
+
+//CUODE:
+db.createCollection("CUODE", 
+{
+    validator: 
+    {
+        $jsonSchema: 
+        {
+            bsonType: 'object',
+            properties: 
+            {
+                //CUODE
+                _id: 
+                {
+                    bsonType: 'int'
+                },
+                descripcionCUODE: 
+                {
+                    bsonType: 'string'
+                }
+            }
+        }
+    }
+})
+
+//------------------------------------------------------------------------------------------------------
+
+//IMPORTADOR:
+db.createCollection("Importador", 
+{
+    validator: 
+    {
+        $jsonSchema: 
+        {
+            bsonType: 'object',
+            properties: 
+            {
+                //NIT
+                _id: 
+                {
+                    bsonType: 'int'
+                },
+                razonSocial: 
+                {
+                    bsonType: 'string'
+                },
+                representanteLegal: 
+                {
+                    bsonType: 'string'
+                },
+                ciudadDomicilio: 
+                {
+                    bsonType: 'string'
+                },
+                departamentoDomicilio: 
+                {
+                    bsonType: 'string'
+                }
+            }
+        }
+    }
+})
+
+//PROVEEDOR:
+db.createCollection("Proveedor", 
+{
+    validator: 
+    {
+        $jsonSchema: 
+        {
+            bsonType: 'object',
+            properties: 
+            {
+                //Proveedor
+                empresaProveedor: 
+                {
+                    bsonType: 'string'
+                },
+                ciudadProveedor: 
+                {
+                    bsonType: 'string'
+                },
+                paisProveedor: 
+                {
+                    bsonType: 'string'
+                },
+                paisOrigen: 
+                {
+                    bsonType: 'string'
+                },
+                continenteOrigen:
+                {
+                    bsonType: 'string'
+                },
+                paisProcedencia:
+                {
+                    bsonType: 'string'
+                }
+            }
+        }
+    }
+})
+
+//DOCUMENTO DE TRANSPORTE:
+db.createCollection("DocumentoTransporte", 
+{
+    validator: 
+    {
+        $jsonSchema: 
+        {
+            bsonType: 'object',
+            properties: 
+            {
+                //No. Doc. Transporte
+                documentoTransporte: 
+                {
+                    bsonType: 'string'
+                },
+                fechaManifiesto: 
+                {
+                    bsonType: 'string'
+                },
+                numeroManifiesto: 
+                {
+                    bsonType: 'int'
+                }
+            }
+        }
+    }
+})
+
+//DECLARACIÓN DE IMPORTACIÓN:
+db.createCollection("DeclaracionImportacion", 
+{
+    validator: 
+    {
+        $jsonSchema: 
+        {
+            bsonType: 'object',
+            properties: 
+            {
+                //No. Declaracion
+                numeroDeclaracion: 
+                {
+                    bsonType: 'int'
+                },
+                fechaDeclaracion: 
+                {
+                    bsonType: 'string'
+                },
+                Importador:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        //NIT
+                        _id:
+                        {
+                            bsonType: 'int'
+                        }
+                    }
+                },
+                ciudadIngreso:
+                {
+                    bsonType: 'string'
+                },
+                departamentoDestino:
+                {
+                    bsonType: 'string'
+                },
+                Proveedor:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        //Proveedor
+                        empresaProveedor:
+                        {
+                            bsonType: 'string'
+                        }
+                    }
+                },
+                DocumentoTransporte:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        //No. Doc. Transporte
+                        documentoTransporte:
+                        {
+                            bsonType: 'string'
+                        }
+                    }
+                },
+                CIIU:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        //CIIU
+                        _id:
+                        {
+                            bsonType: 'int'
+                        }
+                    }
+                },
+                CUODE:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        //CUODE
+                        _id:
+                        {
+                            bsonType: 'int'
+                        }
+                    }
+                },
+                aduana:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        nombreAduana:
+                        {
+                            bsonType: 'string'
+                        },
+                        via:
+                        {
+                            bsonType: 'string'
+                        }
+                    }
+                },
+                valorTotal:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        valorPagado:
+                        {
+                            bsonType: 'double'
+                        },
+                        valorAduana:
+                        {
+                            bsonType: 'double'
+                        },
+                        totalPagado:
+                        {
+                            bsonType: 'double'
+                        }
+                    }
+                },
+                Arancel:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        //Posición
+                        _id:
+                        {
+                            bsonType: 'int'
+                        },
+                        porcentajeArancel: 
+                        {
+                            bsonType: 'double'
+                        },
+                        baseArancel: 
+                        {
+                            bsonType: 'double'
+                        },
+                        subtotalArancel:
+                        {
+                            bsonType: 'double'
+                        },
+                        arancelPagado:
+                        {
+                            bsonType: 'double'
+                        },
+                        totalArancel:
+                        {
+                            bsonType: 'double'
+                        }
+                    }
+                },
+                peso:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        totalPesoNeto:
+                        {
+                            bsonType: 'double'
+                        },
+                        totalPesoBruto:
+                        {
+                            bsonType: 'double'
+                        },
+                        totalBultos:
+                        {
+                            bsonType: 'int'
+                        }
+                    }
+                },
+                incoterms:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        valorFOBUnitario:
+                        {
+                            bsonType: 'double'
+                        },
+                        totalValorFOB:
+                        {
+                            bsonType: 'double'
+                        },
+                        totalValorCIF:
+                        {
+                            bsonType: 'double'
+                        }
+                    }
+                },
+                cif:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        fechaFactura:
+                        {
+                            bsonType: 'string'
+                        },
+                        flete:
+                        {
+                            bsonType: 'double'
+                        },
+                        seguro:
+                        {
+                            bsonType: 'double'
+                        },
+                        otros:
+                        {
+                            bsonType: 'double'
+                        },
+                        tasa:
+                        {
+                            bsonType: 'double'
+                        }
+                    }
+                },
+                iva:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        porcentajeIVA:
+                        {
+                            bsonType: 'double'
+                        },
+                        baseIVA:
+                        {
+                            bsonType: 'double'
+                        },
+                        subtotalIVA:
+                        {
+                            bsonType: 'double'
+                        },
+                        valorTotalIVA:
+                        {
+                            bsonType: 'double'
+                        },
+                        IVAPagado:
+                        {
+                            bsonType: 'double'
+                        }
+                    }
+                }
+            }
+        }
+    }
+})
+
+//------------------------------------------------------------------------------------------------------
+
+//EXPORTADOR:
+db.createCollection("Exportador", 
+{
+    validator: 
+    {
+        $jsonSchema: 
+        {
+            bsonType: 'object',
+            properties: 
+            {
+                //NIT
+                _id: 
+                {
+                    bsonType: 'int'
+                },
+                razonSocial: 
+                {
+                    bsonType: 'string'
+                },
+                representanteLegal: 
+                {
+                    bsonType: 'string'
+                },
+                ciudadDomicilio: 
+                {
+                    bsonType: 'string'
+                },
+                departamentoDomicilio: 
+                {
+                    bsonType: 'string'
+                }
+            }
+        }
+    }
+})
+
+//COMPRADOR:
+db.createCollection("Comprador", 
+{
+    validator: 
+    {
+        $jsonSchema: 
+        {
+            bsonType: 'object',
+            properties: 
+            {
+                //Empresa Importador
+                empresaImportador: 
+                {
+                    bsonType: 'string'
+                },
+                paisDestino: 
+                {
+                    bsonType: 'string'
+                },
+                ciudadImportador: 
+                {
+                    bsonType: 'string'
+                },
+                continenteDestino:
+                {
+                    bsonType: 'string'
+                }
+            }
+        }
+    }
+})
+
+//DECLARANTE
+db.createCollection("Declarante", 
+{
+    validator: 
+    {
+        $jsonSchema: 
+        {
+            bsonType: 'object',
+            properties: 
+            {
+                //NIT Declarante
+                _id: 
+                {
+                    bsonType: 'int'
+                },
+                razonSocial: 
+                {
+                    bsonType: 'string'
+                }
+            }
+        }
+    }
+})
+
+//DECLARACIÓN DE EXPORTACIÓN:
+db.createCollection("DeclaracionExportacion", 
+{
+    validator: 
+    {
+        $jsonSchema: 
+        {
+            bsonType: 'object',
+            properties: 
+            {
+                //No. Declaracion
+                numeroDeclaracion: 
+                {
+                    bsonType: 'int'
+                },
+                fechaDeclaracion: 
+                {
+                    bsonType: 'string'
+                },
+                Exportador:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        //NIT
+                        _id:
+                        {
+                            bsonType: 'int'
+                        }
+                    }
+                },
+                departamentoOrigen:
+                {
+                    bsonType: 'string'
+                },
+                departamentoProcedencia:
+                {
+                    bsonType: 'string'
+                },
+                Comprador:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        //Empresa Importador
+                        empresaImportador:
+                        {
+                            bsonType: 'string'
+                        }
+                    }
+                },
+                expoTransito:
+                {
+                    bsonType: 'string'
+                },
+                CIIU:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        //CIIU
+                        _id:
+                        {
+                            bsonType: 'int'
+                        }
+                    }
+                },
+                CUODE:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        //CUODE
+                        _id:
+                        {
+                            bsonType: 'int'
+                        }
+                    }
+                },
+                aduana:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        nombreAduana:
+                        {
+                            bsonType: 'string'
+                        },
+                        via:
+                        {
+                            bsonType: 'string'
+                        }
+                    }
+                },
+                Declarante:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        //NIT Declarante
+                        _id:
+                        {
+                            bsonType: 'int'
+                        }
+                    }
+                },
+                valorGastos:
+                {
+                    bsonType: 'double'
+                },
+                Arancel:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        //Posición
+                        _id:
+                        {
+                            bsonType: 'int'
+                        }
+                    }
+                },
+                peso:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        totalPesoNeto:
+                        {
+                            bsonType: 'double'
+                        },
+                        totalPesoBruto:
+                        {
+                            bsonType: 'double'
+                        }
+                    }
+                },
+                incoterms:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        valorFOBUnitario:
+                        {
+                            bsonType: 'double'
+                        },
+                        totalValorFOB:
+                        {
+                            bsonType: 'double'
+                        },
+                        totalValorCIF:
+                        {
+                            bsonType: 'double'
+                        }
+                    }
+                },
+                cif:
+                {
+                    bsonType: 'object',
+                    properties:
+                    {
+                        flete:
+                        {
+                            bsonType: 'double'
+                        },
+                        seguro:
+                        {
+                            bsonType: 'double'
+                        }
+                    }
+                }
+            }
+        }
+    }
+})
